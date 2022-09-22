@@ -9,25 +9,26 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-
 class bank:
     
     
     def __init__(self,initial_amt=0):
         self.balance = initial_amt
         print ("\tYour Current Balance is:\t",self.balance)
+        f = open("passbook.txt", "a")
+        f.write("\n\nTRANCTION_ID   TYPE              AMOUNT        STATUS      BALANCE\n")
         
-    def deposit(self,amt=0,id=0):
+    def deposit(self,amt=0.0,id=0):
         self.balance = self.balance + amt
         print (bcolors.WARNING + bcolors.UNDERLINE + "\n\tCurrent Balance :\t",self.balance )
         bcolors.ENDC
         print(bcolors.OKBLUE + bcolors.BOLD  + "\n\t\t\t\tTransaction Successfull.!!!" + bcolors.ENDC)
-        f = open("/home/raj/Downloads/udamy/python/passbook.txt", "a")
-        f.write(f"{id}           deposit           +{amt}        success     {self.balance}\n ")
+        f = open("passbook.txt", "a")
+        f.write(f"{id}           deposit           +{amt}        success     {self.balance}\n")
         f.close()
         
         
-    def widthdraw(self,amt=0,id=0):
+    def widthdraw(self,amt=0.0,id=0):
         if amt > self.balance:
             print(bcolors.FAIL + "\t\t\t\tTransaction Failed.!!!" )
             print ("\t\t\t\tInsufficient Blance." + bcolors.ENDC)
@@ -36,8 +37,8 @@ class bank:
             print (bcolors.WARNING + bcolors.UNDERLINE + "\n\tCurrent Balance :\t",self.balance )
             bcolors.ENDC
             print(bcolors.OKBLUE + bcolors.BOLD  + "\n\t\t\t\tTransaction Successfull.!!!" + bcolors.ENDC)
-            f = open("/home/raj/Downloads/udamy/python/passbook.txt", "a")
-            f.write(f"{id}           deposit           -{amt}        success     {self.balance}\n ")
+            f = open("passbook.txt", "a")
+            f.write(f"{id}           deposit           -{amt}        success     {self.balance}\n")
             f.close()
     
     def bal(self):
@@ -48,7 +49,7 @@ start = input("\n\n\tDo your want to start Banking Y/N :\n\t")
 start = start.lower()   
 if start == "y":
     initial = input("\tEnter the initial amount \n\t:")    
-    initial = int(initial)     
+    initial = float(initial)     
     transc = bank(initial)   
     
     
@@ -59,15 +60,15 @@ while start == "y":
     print ("\n\n\tDo you want to Deposit or Widthdraw") 
 
     trans = input("\tEnter 1 for deposit\n\tEnter 2 for widthdraw \n\tEnter 3 for Balance Enquery\n\t: ")
-    trans = int(trans)
+    trans = float(trans)
 
     if trans == 1:
         amt = input("\tEnter the amt to be deposited : ")
-        amt = int(amt)
+        amt = float(amt)
         transc.deposit(amt,i) 
     elif trans == 2:
         amt = input("\tEnter the amt to be widthdrawn : ")
-        amt = int(amt)
+        amt = float(amt)
         transc.widthdraw(amt,i) 
     elif trans == 3:
         transc.bal()
